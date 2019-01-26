@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_HOME" value="F:/log/springbatchdemo" />
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>
+				[%d{YYYY-MM-dd'T'HH:mm:ss.SSS}][%c\(%line\)][%thread][%level][%X{TENANT}][%X{THREADID}][%X{UUID}][%m]%n
+			</pattern>
+		</layout>
+	</appender>
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>${LOG_HOME}/debug.log.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>
+				[%d{YYYY-MM-dd'T'HH:mm:ss.SSS}][%c\(%line\)][%thread][%level][%X{TENANT}][%X{THREADID}][%X{UUID}][%m]%n
+			</pattern>
+		</layout>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>20MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+	<!-- show parameters for hibernate sql 专为 Hibernate 定制 -->
+	<logger name="org.hibernate.type.descriptor.sql.BasicBinder"
+		level="TRACE" />
+	<logger name="org.hibernate.type.descriptor.sql.BasicExtractor"
+		level="DEBUG" />
+	<logger name="org.hibernate.SQL" level="DEBUG" />
+	<logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />
+	<logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />
+
+	<logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />
+	<!-- logger level -->
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+
+	<!-- <appender name="DB" class="ch.qos.logback.classic.db.DBAppender"> <connectionSource 
+		class="ch.qos.logback.core.db.DriverManagerConnectionSource"> <dataSource 
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"> <driverClass>com.mysql.jdbc.Driver</driverClass> 
+		<url>jdbc:mysql://127.0.0.1:3306/databaseName</url> <user>root</user> <password>1234</password> 
+		</dataSource> </connectionSource> </appender> -->
+</configuration>
